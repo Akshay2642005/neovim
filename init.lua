@@ -38,7 +38,7 @@ require("lazy").setup("plugins", {
 })
 
 -- theme
- vim.cmd("colorscheme vague")
+vim.cmd("colorscheme vague")
 --vim.cmd("colorscheme base16-gruvbox-material-dark-hard")
 if vim.g.colors_name == "vague" then
   utils.color_overrides.vague_line_colors()
