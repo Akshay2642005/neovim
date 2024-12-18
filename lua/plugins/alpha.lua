@@ -44,9 +44,9 @@ return {
           shortcut = {
             -- stylua: ignore start
             { icon = " ", desc = "new file", key = "e", action = ":ene | startinsert" },
-            { icon = "󰥨 ", desc = "find files", key = "f", action = "Telescope find_files" },
+            --{ icon = "󰥨 ", desc = "find files", key = "f", action = "Telescope find_files" },
             { icon = " ", desc = "browse Files", key = "n", action = "Oil --float" },
-            { icon = " ", desc = "settings", key = "s", action = ":e $MYVIMRC | :cd %:p:h | split . | wincmd k | pwd" },
+            { icon = " ", desc = "settings", key = "s", action = ":e $MYVIMRC | :cd %:p:h | wincmd k | pwd" },
             { icon = "󰒲 ", desc = "lazy", key = "l", action = "Lazy" },
             { icon = "󱌣 ", desc = "mason", key = "m", action = "Mason" },
             { icon = "󰭿 ", desc = "quit", key = "q", action = "qa" },
@@ -67,4 +67,7 @@ return {
       }
     end,
   },
+  --[[ {
+    "xiyaowong/transparent.nvim",
+  },--]]
 }

@@ -1,5 +1,4 @@
 local utils = require("utils")
-
 utils.fix_telescope_parens_win()
 
 -- make help and man open up on the side instead above
@@ -7,7 +6,6 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = { "help", "man" },
   command = "wincmd L",
 })
-
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -38,9 +36,8 @@ require("lazy").setup("plugins", {
 })
 
 -- theme
-vim.cmd("colorscheme vague")
---vim.cmd("colorscheme base16-gruvbox-material-dark-hard")
-if vim.g.colors_name == "vague" then
+vim.cmd("colorscheme kanagawa-paper")
+if vim.g.colors_name == "vagu" then
   utils.color_overrides.vague_line_colors()
   utils.color_overrides.vague_status_colors()
 elseif vim.g.colors_name == "base16-black-metal-gorgoroth" then
@@ -64,7 +61,7 @@ vim.api.nvim_create_autocmd("FileType", {
   group = vim.api.nvim_create_augroup("py_mapping", { clear = true }),
   pattern = "python",
   callback = function()
-    vim.keymap.set("n", "<F4>", ":w <bar> exec '!python '.shellescape('%')<CR>")
+    vim.keymap.set("n", "<F11>", ":w <bar> exec '!python '.shellescape('%')<CR>")
   end
 })
 
@@ -321,33 +318,34 @@ vim.api.nvim_set_hl(0, "I2A201", { fg = "#345b81" })
 vim.api.nvim_set_hl(0, "I2A202", { fg = "#1e305d" })
 vim.api.nvim_set_hl(0, "I2A203", { fg = "#548faf" })
 vim.api.nvim_set_hl(0, "I2A204", { fg = "#5790af" })
+vim.api.nvim_set_hl(0, "Normal", { bg = "#131617" })
+
+require 'lspconfig'.emmet_ls.setup {
+  cmd = { "emmet-ls", "--stdio" }
+}
+
+require 'lspconfig'.html.setup {
+  cmd = { "vscode-html-language-server", "--stdio" }
+}
+
+require('lspconfig').ts_ls.setup {
+  cmd = { "typescript-language-server", "--stdio" }
+}
 
 
---Gen keymaps
-vim.keymap.set({ 'n', 'v' }, '<leader>gg', ':Gen<CR>')
-vim.keymap.set('n', '<leader>gc', ':Gen Chat<CR>')
-vim.keymap.set('n', '<leader>ga', ':Gen Ask<CR>')
-vim.keymap.set('n', '<leader>gS', ':Gen Summarize<CR>')
-vim.keymap.set('n', '<leader>gG', ':Gen Generate<CR>')
 
 if vim.g.neovide then
-  -- Put anything you want to happen only in Neovide here
-  -- g:neovide_transparency should be 0 if you want to unify transparency of content and title bar.
-  -- Helper function for transparency formatting
-  -- g:neovide_transparency should be 0 if you want to unify transparency of content and title bar.
-  vim.g.neovide_transparency = 0.93
-  vim.g.neovide_background_color = "#0f1117"
-  vim.g.neovide_window_blurred = true
-  vim.g.neovide_refresh_rate = 144
-  vim.g.neovide_padding_top = 0
-  vim.g.neovide_padding_bottom = 0
-  vim.g.neovide_padding_right = 0
-  vim.g.neovide_padding_left = 0
-  vim.g.neovide_theme = "vitesse"
-  vim.o.guifont = "Hack Nerd Font:h14"
-  vim.g.neovide_hide_mouse_when_typing = true
-  vim.g.neovide_cursor_animation_length = 0.0
-  vim.g.neovide_cursor_trail_size = 0.0
-  vim.g.neovide_text_gamma = 0
-  vim.g.neovide_text_contrast = 0.1
+  vim.cmd("colorscheme kanagawa-paper")
+  vim.g.guifont = "Hack Nerd Font:h14"
+  --vim.g.guifont = "IosevkaTerm Nerd Font:h14"
+  vim.g.neovide_padding_top = 10;
+  vim.g.neovide_padding_bottom = 5;
+  vim.g.neovide_padding_left = 5;
+  vim.g.neovide_padding_right = 5;
+  vim.g.neovide_text_gamma = 1;
+  vim.g.neovide_text_contrast = 1;
+  vim.g.neovide_transparency = 1;
+  vim.cmd([[
+  let g:transparent_enabled = 0
+]])
 end

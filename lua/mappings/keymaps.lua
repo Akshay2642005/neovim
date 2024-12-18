@@ -4,11 +4,7 @@ discipline.cowboy()
 
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
--- aider
 
-keymap.set("n", "<leader>oa", "<cmd>lua AiderOpen()<cr>",opts)
-keymap.set("n","<leader>ob","<cmd>lua Aiderbackground()<cr>",opts)
- 
 -- Do things without affecting the registers
 keymap.set("n", "x", '"_x')
 keymap.set("n", "<Leader>p", '"0p')
@@ -32,9 +28,6 @@ keymap.set("n", "dw", 'vb"_d')
 
 -- Select all
 keymap.set("n", "<C-a>", "gg<S-v>G")
-
--- Save with root permission (not working for now)
---vim.api.nvim_create_user_command('W', 'w !sudo tee > /dev/null %', {})
 
 -- Disable continuations
 keymap.set("n", "<Leader>o", "o<Esc>^Da", opts)
@@ -64,19 +57,5 @@ keymap.set("n", "<C-w><down>", "<C-w>-")
 
 -- Diagnostics
 keymap.set("n", "<C-j>", function()
-	vim.diagnostic.goto_next()
+  vim.diagnostic.goto_next()
 end, opts)
-
-keymap.set("n", "<leader>r", function()
-	require("craftzdog.hsl").replaceHexWithHSL()
-end)
-
-keymap.set("n", "<leader>i", function()
-	require("craftzdog.lsp").toggleInlayHints()
-end)
-
-
--- Quarto
-local quarto = require('quarto')
-quarto.setup()
-vim.keymap.set('n', '<leader>jp', quarto.quartoPreview, { silent = true, noremap = true })

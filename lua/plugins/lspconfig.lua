@@ -8,6 +8,9 @@ return {
     end,
   },
   {
+    "mfussenegger/nvim-jdtls",
+  },
+  {
     "williamboman/mason-lspconfig.nvim",
     config = function()
       require("mason-lspconfig").setup({
@@ -90,11 +93,19 @@ return {
           "tsx",
         },
       })
+      lspconfig.solidity_ls.setup({
+        capabilities = capabilities,
+        on_attach = on_attach,
+        cmd = { "vscode-solidity-server", "--stdio" },
+        --cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
+        filetypes = { "solidity" },
+        root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
+      })
       lspconfig.htmx.setup({
         capabilities = capabilities,
         filetypes = { "html", "templ" },
       })
-      lspconfig.emmet_language_server.setup({
+      lspconfig.emmet_ls.setup({
         capabilities = capabilities,
         filetypes = {
           "templ",
@@ -154,6 +165,10 @@ return {
         capabilties = capabilities,
       })
 
+      require("lspconfig").gleam.setup({
+        capabilities = capabilities,
+      })
+
       require("lspconfig").clangd.setup({
         cmd = {
           "clangd",
@@ -205,6 +220,46 @@ return {
 
       lspconfig.marksman.setup({
         capabilties = capabilities,
+      })
+
+      lspconfig.rust_analyzer.setup({
+        capabilities = capabilities,
+        on_attach = on_attach,
+        settings = {
+          ["rust-analyzer"] = {
+            enable = "true",
+            assist = {
+              importGranularity = "module",
+              importPrefix = "by_self",
+            },
+            cargo = {
+              autoreload = true,
+              buildScripts = {
+                enable = true,
+                overrideCommand = {
+                  "build",
+                  "--package",
+                  "--bin",
+                  "--example",
+                  "--all-targets",
+                },
+              },
+              noDefaultFeatures = true,
+              targetDir = "./target",
+            },
+            diagnostics = {
+              enable = true,
+            },
+            procMacro = {
+              enable = true,
+            },
+          },
+        },
+        -- cmd = { "rust-analyzer" },
+        -- filetypes = { "rust" },
+        -- root_dir = function(fname)
+        --   return util.root_pattern("Cargo.toml", "rust-project.json")(fname) or util.find_git_ancestor(fname)
+        -- end,
       })
       lspconfig.gleam.setup({
         capabilties = capabilities,
